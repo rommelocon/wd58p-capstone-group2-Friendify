@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\ProfilePicture;
+use App\Models\Post;
+
+
 
 class User extends Authenticatable
 {
@@ -23,6 +27,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function profilePicture()
+    {
+        return $this->hasOne(ProfilePicture::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -32,6 +41,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_picture',
     ];
 
     /**

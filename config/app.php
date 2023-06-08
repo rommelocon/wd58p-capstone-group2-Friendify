@@ -183,6 +183,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Schema' => Staudenmeir\LaravelMergedRelations\Facades\Schema::class,
     ])->toArray(),
+
+
 
 ];

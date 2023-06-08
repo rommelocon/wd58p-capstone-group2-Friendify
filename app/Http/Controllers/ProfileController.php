@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,19 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function showProfile($id)
+    {
+        $user = User::find($id);
+        $myPosts = Post::where('user_id', $user->id)->get(); // Retrieve posts of the user
+        $friendPosts = $user->friendsTo->flatMap(function ($friend) {
+            return Post::where('user_id', $friend->id)->get(); // Retrieve posts of each friend
+        });
+
+        $posts = $myPosts->concat($friendPosts); // Combine user posts and friend posts
+
+        return view('console.profile.index', compact('user', 'posts'));
+    }
+
     /**
      * Display the user's profile form.
      */

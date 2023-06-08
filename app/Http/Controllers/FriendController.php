@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Home;
-use App\Http\Requests\StoreHomeRequest;
-use App\Http\Requests\UpdateHomeRequest;
-use App\Models\Post;
+use App\Models\Friend;
+use App\Http\Requests\StoreFriendRequest;
+use App\Http\Requests\UpdateFriendRequest;
 
-class HomeController extends Controller
+class FriendController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,14 +14,9 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $friendIds = $user->friendsFrom->pluck('id')->merge($user->friendsTo->pluck('id'))->push($user->id);
+        $friends = $user->friends()->get(); // Retrieve the friends of the authenticated user
 
-        $posts = Post::whereIn('user_id', $friendIds)
-            ->with('user')
-            ->latest()
-            ->paginate(10);
-
-        return view('home', compact('posts'));
+        return view('console.friends.index', compact('friends'));
     }
 
     /**
@@ -36,7 +30,7 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHomeRequest $request)
+    public function store(StoreFriendRequest $request)
     {
         //
     }
@@ -44,7 +38,7 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Home $home)
+    public function show(Friend $friend)
     {
         //
     }
@@ -52,7 +46,7 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Home $home)
+    public function edit(Friend $friend)
     {
         //
     }
@@ -60,7 +54,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHomeRequest $request, Home $home)
+    public function update(UpdateFriendRequest $request, Friend $friend)
     {
         //
     }
@@ -68,7 +62,7 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Home $home)
+    public function destroy(Friend $friend)
     {
         //
     }

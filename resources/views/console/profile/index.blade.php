@@ -33,6 +33,14 @@
                                 Add Friend
                             </button>
                         </form>
+                        @elseif (auth()->user()->friends->contains($user))
+                        <form action="{{ route('removeFriend', $user) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                                Remove Friend
+                            </button>
+                        </form>
                         @endif
                     </div>
 

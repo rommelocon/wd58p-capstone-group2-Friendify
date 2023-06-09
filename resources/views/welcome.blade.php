@@ -17,6 +17,16 @@
     /* ------------------------------------ Click on login and Sign Up to  changue and view the effect
 ---------------------------------------
 */
+body {
+    background-image: url('https://img.freepik.com/free-photo/silhouette-group-people-have-fun-top-mountain-near-tent-during-sunset_146671-18473.jpg?w=1380&t=st=1686315237~exp=1686315837~hmac=53d3599378720be49bbe39f314f9876a7e54edda15f0ecfcb8bab19c5988aa88');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+
+
+}
+
 
 * {
   margin: 0px auto;
@@ -31,26 +41,7 @@
   display: flex;
   height: 100%;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfd8dc+0,607d8b+100,b0bec5+100 */
-  background: #cfd8dc; /* Old browsers */
-  background: -moz-linear-gradient(
-    -45deg,
-    #cfd8dc 0%,
-    #607d8b 100%,
-    #b0bec5 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    -45deg,
-    #cfd8dc 0%,
-    #607d8b 100%,
-    #b0bec5 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    135deg,
-    #cfd8dc 0%,
-    #607d8b 100%,
-    #b0bec5 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+ 
 }
 
 .cont_centrar {
@@ -209,6 +200,7 @@
 
 .col_md_sign_up {
   position: relative;
+  position:left;
   float: left;
   width: 50%;
 }
@@ -383,6 +375,7 @@ background text
   margin: 10px;
   margin-left: 30px;
 }
+
 </Style>
 
 <body class="antialiased">
@@ -403,7 +396,7 @@ background text
   </div>
 <div class="col_md_sign_up">
 <div class="cont_ba_opcitiy">
-  <h2>REGISTER</h2>
+  <h2>Register</h2>
 
   
   <p>Please register</p>
@@ -427,49 +420,10 @@ background text
  <div class="cont_form_login">
 <a href="#" onclick="hidden_login_and_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
    <h2>LOGIN</h2>
-   
-   <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+ <input type="text" placeholder="Email" />
+<input type="password" placeholder="Password" />
+<button class="btn_login" onclick="change_to_login()">LOGIN</button>
+  </div>
   
    <div class="cont_form_sign_up">
 <a href="#" onclick="hidden_login_and_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
@@ -478,7 +432,7 @@ background text
 <input type="text" placeholder="User" />
 <input type="password" placeholder="Password" />
 <input type="password" placeholder="Confirm Password" />
-<button class="btn_sign_up" onclick="change_to_sign_up()">Register</button>
+<button class="btn_sign_up" onclick="change_to_sign_up()">SIGN UP</button>
 
   </div>
 
@@ -487,27 +441,6 @@ background text
   </div>
  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
     /* ------------------------------------ Click on login and Sign Up to  changue and view the effect

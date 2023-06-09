@@ -403,7 +403,7 @@ background text
   </div>
 <div class="col_md_sign_up">
 <div class="cont_ba_opcitiy">
-  <h2>Register</h2>
+  <h2>REGISTER</h2>
 
   
   <p>Please register</p>
@@ -427,10 +427,49 @@ background text
  <div class="cont_form_login">
 <a href="#" onclick="hidden_login_and_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
    <h2>LOGIN</h2>
- <input type="text" placeholder="Email" />
-<input type="password" placeholder="Password" />
-<button class="btn_login" onclick="change_to_login()">LOGIN</button>
-  </div>
+   
+   <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+
+            <x-primary-button class="ml-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
   
    <div class="cont_form_sign_up">
 <a href="#" onclick="hidden_login_and_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
@@ -439,7 +478,7 @@ background text
 <input type="text" placeholder="User" />
 <input type="password" placeholder="Password" />
 <input type="password" placeholder="Confirm Password" />
-<button class="btn_sign_up" onclick="change_to_sign_up()">SIGN UP</button>
+<button class="btn_sign_up" onclick="change_to_sign_up()">Register</button>
 
   </div>
 
@@ -448,6 +487,27 @@ background text
   </div>
  </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     /* ------------------------------------ Click on login and Sign Up to  changue and view the effect

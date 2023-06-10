@@ -40,7 +40,7 @@ class FriendRequest extends Notification
         return (new MailMessage)
             ->subject('Friend Request')
             ->line('You have received a friend request from ' . $this->user->name)
-            ->action('View Profile', route('profile.show', $this->user->id));
+            ->action('View Profile', route('profile.index', $this->user->id));
     }
 
     /**

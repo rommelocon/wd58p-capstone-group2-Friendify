@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function showProfile($id)
+    public function index($id)
     {
         $user = User::find($id);
         $myPosts = Post::where('user_id', $user->id)->get(); // Retrieve posts of the user

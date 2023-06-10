@@ -12,12 +12,13 @@ class HomeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $user = auth()->user();
-        $friendIds = $user->friendsFrom->pluck('id')->merge($user->friendsTo->pluck('id'))->push($user->id);
+        $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
 
-        $posts = Post::whereIn('user_id', $friendIds)
+        $posts = Post::whereIn('user_id', $acceptedFriendIds)
             ->with('user')
             ->latest()
             ->paginate(10);

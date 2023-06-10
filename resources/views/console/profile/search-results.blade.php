@@ -18,7 +18,7 @@
                             <ul>
                                 @foreach ($results as $user)
                                     <li>
-                                        <a href="{{ route('profile.show', $user->id) }}" class="text-blue-500 hover:text-blue-700">
+                                        <a href="{{ route('profile.index', $user->id) }}" class="text-blue-500 hover:text-blue-700">
                                             {{ $user->name }}
                                         </a>
                                     </li>

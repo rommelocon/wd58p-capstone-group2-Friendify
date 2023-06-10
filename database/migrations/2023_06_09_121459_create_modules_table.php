@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_pictures', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('image_path');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name');
+            $table->string('route');
+            $table->string('icon_class')->nullable();
+            $table->integer('parent_module_id')->default(0);
+            $table->string('sort_order')->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('modified_by')->nullable()->default(0);
             $table->timestamps();
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profile_pictures');
+        Schema::dropIfExists('modules');
     }
 };

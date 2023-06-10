@@ -7,20 +7,61 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\ProfilePicture;
+use App\Models\Post;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use \Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
 
-    public function friends(): BelongsToMany
+    public function friends()
     {
-        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id');
+        return $this->mergedRelationWithModel(User::class, 'friends_view');
+    }
+
+    public function pendingFriendsTo()
+    {
+        return $this->friendsTo()->wherePivot('accepted', false);
+    }
+
+    public function pendingFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', false);
+    }
+
+    public function acceptedFriendsTo()
+    {
+        return $this->friendsTo()->wherePivot('accepted', true);
+    }
+
+    public function acceptedFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', true);
+    }
+
+    public function friendsTo()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
+            ->withPivot('accepted')
+            ->withTimestamps();
+    }
+
+    public function friendsFrom()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'friend_id', 'user_id')
+            ->withPivot('accepted')
+            ->withTimestamps();
     }
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    public function profilePicture()
+    {
+        return $this->hasOne(ProfilePicture::class);
     }
 
     /**
@@ -32,6 +73,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_picture',
     ];
 
     /**

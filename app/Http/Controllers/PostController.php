@@ -30,12 +30,35 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'required|string|max:255',
+            'content' => 'required|string|max:255', // Allow text
+            'image' => 'nullable|image|max:2048', // Allow image uploads (optional)
+            'video' => 'nullable|mimes:mp4|max:100000', // Allow video uploads (optional)
+            // 'link' => 'nullable|url', // Allow link input (optional)
         ]);
 
         $post = new Post();
         $post->content = $request->input('content');
         $post->user_id = Auth::id();
+
+        // Handle image upload (if provided)
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('post_images', 'public');
+            $post->image_path = $imagePath;
+        }
+
+        // Handle video upload (if provided)
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $videoPath = $video->store('post_videos', 'public');
+            $post->video_path = $videoPath;
+        }
+
+        // // Handle link input (if provided)
+        // if ($request->has('link')) {
+        //     $post->link = $request->input('link');
+        // }
+
         $post->save();
 
         return redirect()->back()->with('success', 'Post created successfully.');

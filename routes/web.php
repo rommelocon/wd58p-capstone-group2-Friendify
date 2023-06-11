@@ -53,5 +53,8 @@ Route::post('/profile/{sender}/cancel-friend-request', [FriendRequestController:
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
+Route::resource('users', 'UserController')->only('show');
 
 require __DIR__ . '/auth.php';
+
+

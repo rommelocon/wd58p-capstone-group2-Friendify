@@ -1,29 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.textarea-button {
-    width: 100%;
-    height: auto;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    font-family: inherit;
-    font-size: 14px;
-    line-height: 1.5;
-    resize: vertical;
-    overflow: auto;
-    background-color: #fff;
-    box-sizing: border-box;
-    text-align: left;
-    resize: none;
-}
-
-.textarea-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #1e90ff;
-}
-
-.hidden {
-    display: none;
-}

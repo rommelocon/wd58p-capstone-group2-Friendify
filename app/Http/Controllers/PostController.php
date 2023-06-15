@@ -30,7 +30,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'required|string|max:255', // Allow text
+            'content' => 'nullable|string|max:255', // Allow the content field to be nullable
             'image' => 'nullable|image|max:2048', // Allow image uploads (optional)
             'video' => 'nullable|mimes:mp4|max:100000', // Allow video uploads (optional)
             // 'link' => 'nullable|url', // Allow link input (optional)

@@ -1,6 +1,6 @@
-@props(['profilePicture', 'userName', 'width' => 12])
+@props(['profilePicture', 'userName'])
 
-<div class="w-{{$width}} h-{{$width}} rounded-full mr-2 object-cover overflow-hidden">
+<div {{ $attributes->merge(['class'=>'small-picture']) }}>
     @if ($profilePicture)
     <img src="{{ asset('storage/' . $profilePicture->image_path) }}" alt="{{ $userName }}" class="">
     @else

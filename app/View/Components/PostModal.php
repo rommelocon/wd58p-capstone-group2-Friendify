@@ -8,13 +8,13 @@ use Illuminate\View\Component;
 
 class PostModal extends Component
 {
-    public $show;
+    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct($show = false)
+    public function __construct($title = '')
     {
-        $this->show = $show;
+        $this->title = $title;
     }
 
     /**

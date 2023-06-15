@@ -13,21 +13,23 @@
                         <h1>Search Results</h1>
 
                         @if ($results->isEmpty())
-                            <p>No results found.</p>
+                        <p>No results found.</p>
                         @else
-                            <ul>
-                                @foreach ($results as $user)
-                                    <li>
-                                        <a href="{{ route('profile.index', $user->id) }}" class="text-blue-500 hover:text-blue-700">
-                                            {{ $user->name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <ul>
+                            @foreach ($results as $user)
+                            <li class="flex items-center mb-4">
+                                <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" />
+                                <a href="{{ route('profile.index', $user->id) }}" class="text-blue-500 hover:text-blue-700">
+                                    {{ $user->name }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
                         @endif
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </x-app-layout>

@@ -14,7 +14,7 @@ class FriendController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $friends = $user->friends()->get(); // Retrieve the friends of the authenticated user
+        $friends = $user->friends()->with('profilePicture')->get();
 
         return view('console.friends.index', compact('friends'));
     }

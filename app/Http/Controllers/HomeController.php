@@ -6,23 +6,33 @@ use App\Models\Home;
 use App\Http\Requests\StoreHomeRequest;
 use App\Http\Requests\UpdateHomeRequest;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $user = auth()->user();
-        $friendIds = $user->friendsFrom->pluck('id')->merge($user->friendsTo->pluck('id'))->push($user->id);
+        
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $user = Auth::user();
+            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
 
-        $posts = Post::whereIn('user_id', $friendIds)
-            ->with('user')
-            ->latest()
-            ->paginate(10);
+            $posts = Post::whereIn('user_id', $acceptedFriendIds)
+                ->with('user')
+                ->latest()
+                ->paginate(10);
 
-        return view('home', compact('posts'));
+            return view('home', compact('posts', 'user'));
+        }
+
+        // Handle the case when the user is not authenticated
+        return redirect()->route('login');
     }
 
     /**
@@ -46,7 +56,7 @@ class HomeController extends Controller
      */
     public function show(Home $home)
     {
-        //
+       //
     }
 
     /**

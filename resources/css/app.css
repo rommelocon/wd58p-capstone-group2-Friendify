@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .container {
     display: grid;
     gap: 0px;
@@ -27,3 +28,18 @@
 .post {
     grid-column: 2 / 5;
 }
+
+@layer components {
+    .small-picture {
+        @apply w-12 h-12 rounded-full mr-2 object-cover overflow-hidden;
+    }
+    .big-picture {
+        @apply w-48 h-48 rounded-full mr-2 object-cover overflow-hidden;
+    }
+    .vertical-center {
+        top: 50%;
+        position: relative;
+        transform: translateY(-50%) !important;
+    }
+}
+

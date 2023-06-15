@@ -16,9 +16,9 @@
                         <li class="mb-2 flex justify-between items-center">
 
                             <div class="flex items-center">
-                                <x-profile-picture :profilePicture="$friend->profilePicture" />
+                                <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
 
-                                <a href="{{ route('profile.show', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
+                                <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                     {{ $friend->name }}
                                 </a>
                             </div>
@@ -48,14 +48,14 @@
                             @foreach (Auth::user()->pendingFriendsFrom as $friend)
                             <li class="mb-4 flex justify-between items-center">
                                 <div class="flex items-center">
-                                    <x-profile-picture :profilePicture="$friend->profilePicture" />
+                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
 
-                                    <a href="{{ route('profile.show', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
+                                    <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                         {{ $friend->name }}
                                     </a>
                                 </div>
 
-                                <div class="flex space-x-4 mt-2">
+                                <div class="flex space-x-1 mt-2">
                                     <form action="{{ route('acceptFriendRequest', $friend) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">Accept</button>
@@ -86,11 +86,11 @@
                     <div class="friend-requests">
                         <ul>
                             @foreach (Auth::user()->pendingFriendsTo as $friend)
-                            <li class="mb-4 flex justify-between items-center">
+                            <li class="flex justify-between items-center">
                                 <div class="flex items-center">
-                                    <x-profile-picture :profilePicture="$friend->profilePicture" />
+                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
 
-                                    <a href="{{ route('profile.show', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
+                                    <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                         {{ $friend->name }}
                                     </a>
                                 </div>
@@ -104,15 +104,14 @@
                             </li>
                             @endforeach
                         </ul>
+                        @if (session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 mt-4 rounded" role="alert">
+                            {{ session('success') }}
+                        </div>
+                        @endif
                     </div>
                     @else
                     <p class="italic">No friend requests.</p>
-                    @endif
-
-                    @if (session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 mt-4 rounded" role="alert">
-                        {{ session('success') }}
-                    </div>
                     @endif
                 </div>
             </div>

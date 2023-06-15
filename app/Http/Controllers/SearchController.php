@@ -10,24 +10,23 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-
-        // Perform search logic here
-        $results = User::where('name', 'like', '%' . $query . '%')->get();
-
-        // Return the search results view
-        return view('console.profile.search-results', compact('results'));
-    }
-
-
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = $request->input('query');
+
+        if (empty($query)) {
+            $results = null; // No query entered, set results to null
+        } else {
+            // Perform your search logic here based on the $query
+            $results = User::where('name', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%')
+                ->get();
+        }
+        // Return the search results view
+        return view('console.search.index', compact('results'));
     }
 
     /**

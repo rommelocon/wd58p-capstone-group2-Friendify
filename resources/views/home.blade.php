@@ -17,7 +17,6 @@
 
                         <x-post-modal title="Post Modal" />
                     </div>
-
                     <!-- User Posts -->
                     <div class="posts">
                         @forelse($posts as $post)
@@ -59,7 +58,7 @@
                             <div class="items-center justify-center text-center mt-2 grid grid-cols-2 border-t-2">
                                 <form method="POST">
                                     @csrf
-                                    <button class="flex items-center justify-center text-center p-2 likeButton w-full hover:bg-gray-100" data-post-id="{{ $post->id }}">
+                                    <button id="reaction-btn" class="flex items-center justify-center text-center p-2 likeButton w-full hover:bg-gray-100" data-post-id="{{ $post->id }}">
                                         <span class="like-icon">
                                             @if ($post->isLikedBy(auth()->user()))
                                             <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-1">
@@ -128,6 +127,11 @@
     $(document).ready(function() {
         $('.likeButton').click(function(event) {
             event.preventDefault();
+
+            $(event.target).prop("disabled", true);
+            setTimeout(function() {
+                $(event.target).prop("disabled", false);
+            }, 3000); // in milliseconds
 
             var button = $(this);
             var postId = button.data('post-id');

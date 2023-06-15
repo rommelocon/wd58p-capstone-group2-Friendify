@@ -11,9 +11,9 @@
                 <div class="p-6 bg-white flex items-center justify-between">
                     <div class="flex items-center">
 
-                        <div class="w-48 h-48 rounded-full mr-2 object-cover overflow-hidden">
-                            <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" :width="'full'" />
-                        </div>
+
+                        <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" class="big-picture" />
+
 
                         <div>
                             <p class="text-4xl font-black">{{ $user->name }}</p>

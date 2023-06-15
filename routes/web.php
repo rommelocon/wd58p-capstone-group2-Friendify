@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 });
 
 // Profile picture routes
@@ -55,6 +56,7 @@ Route::post('/profile/{sender}/accept-friend-request', [FriendRequestController:
 Route::post('/profile/{sender}/remove-friend-request', [FriendRequestController::class, 'removeFriendRequest'])->name('removeFriendRequest');
 Route::delete('/profile/{user}/cancel-friend-request', [FriendRequestController::class, 'cancelFriendRequest'])->name('cancelFriendRequest');
 
+// Reaction routes
 Route::post('/posts/{post}/like', [ReactionController::class, 'update']);
 Route::post('/posts/{post}/unlike', [ReactionController::class, 'remove']);
 
@@ -63,8 +65,5 @@ Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name(
 
 // Create a new comment for a post (POST request)
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
-
-Route::get('/search', [SearchController::class, 'search'])->name('search');
-
 
 require __DIR__ . '/auth.php';

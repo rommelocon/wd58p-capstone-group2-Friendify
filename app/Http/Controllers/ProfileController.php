@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,20 @@ class ProfileController extends Controller
         $user = User::find($id);
         $friends = $user->friends()->with('profilePicture')->get();
 
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $user = Auth::user();
+            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
+
+            $posts = Post::whereIn('user_id', $acceptedFriendIds)
+                ->with('user')
+                ->latest()
+                ->paginate(10);
+
+            return view('console.profile.index', compact('posts', 'user'));
+        }
+
+        // Handle the case when the user is not authenticated
         return view('console.profile.index', compact('user', 'friends'));
     }
 

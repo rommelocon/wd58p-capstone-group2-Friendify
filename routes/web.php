@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ReactionController;
+use App\Http\Controllers\ShareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use App\Http\Controllers\ReactionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::get('/home', function () {
@@ -38,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
     // Navigation
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::match(['GET', 'POST'], '/home', [HomeController::class, 'index'])->name('home');
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
@@ -56,15 +57,15 @@ Route::post('/profile/{sender}/accept-friend-request', [FriendRequestController:
 Route::post('/profile/{sender}/remove-friend-request', [FriendRequestController::class, 'removeFriendRequest'])->name('removeFriendRequest');
 Route::delete('/profile/{user}/cancel-friend-request', [FriendRequestController::class, 'cancelFriendRequest'])->name('cancelFriendRequest');
 
+// Share a post
+Route::post('/posts/share', [ShareController::class, 'create'])->name('posts.share');
+
 // Reaction routes
 Route::post('/posts/{post}/like', [ReactionController::class, 'update']);
 Route::post('/posts/{post}/unlike', [ReactionController::class, 'remove']);
 
 // Retrieve comments for a post (GET request)
 Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('comments.index');
-
-
-Route::resource('users', 'UserController')->only('show');
 
 // Create a new comment for a post (POST request)
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');

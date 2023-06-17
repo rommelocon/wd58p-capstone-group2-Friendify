@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="grid grid-cols-3 gap-4">
-            <div class="col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg h-full">
+        <div class="grid md:grid-cols-3 gap-4 m-5">
+            <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg h-full">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-xl font-bold mb-4">Friend List</h1>
                     @if ($friends->count() > 0)

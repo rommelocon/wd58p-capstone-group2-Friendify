@@ -2,12 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class Post extends BaseModel
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'user_id',
         'content',
@@ -41,5 +37,10 @@ class Post extends BaseModel
     {
         $this->comments_count = $this->comments()->count();
         $this->save();
+    }
+
+    public function shares()
+    {
+        return $this->hasMany(Share::class);
     }
 }

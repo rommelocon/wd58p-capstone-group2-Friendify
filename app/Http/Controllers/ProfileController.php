@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +15,20 @@ class ProfileController extends Controller
 {
     public function index($id)
     {
-        $user = User::find($id);
-        $friends = $user->friends()->with('profilePicture')->get();
+        if (Auth::check()) {
+            $user = User::find($id);
+            $friends = $user->friends()->with('profilePicture')->get();
+            $loggedInUser = Auth::user(); // Get the currently logged-in user
 
-        return view('console.profile.index', compact('user', 'friends'));
+            $posts = Post::where('user_id', $user->id) // Filter posts by the user being viewed
+                ->with('user')
+                ->latest()
+                ->paginate(10);
+
+            return view('console.profile.index', compact('loggedInUser', 'user', 'friends', 'posts'));
+        }
     }
+
 
     /**
      * Display the user's profile form.

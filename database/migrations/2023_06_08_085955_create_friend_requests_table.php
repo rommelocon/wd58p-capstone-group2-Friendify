@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('friend_requests', function (Blueprint $table) {
             $table->id();
+            $table->integer('created_by')->default(0);
+            $table->integer('modified_by')->nullable()->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

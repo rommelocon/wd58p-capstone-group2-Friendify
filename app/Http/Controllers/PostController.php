@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Share;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -69,7 +70,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+       //
     }
 
     /**

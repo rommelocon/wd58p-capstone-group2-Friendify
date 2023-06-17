@@ -6,8 +6,9 @@ use App\Models\Home;
 use App\Http\Requests\StoreHomeRequest;
 use App\Http\Requests\UpdateHomeRequest;
 use App\Models\Post;
-use App\Models\User;
+use App\Models\Share;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
@@ -17,8 +18,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        
-        // Check if the user is authenticated
         if (Auth::check()) {
             $user = Auth::user();
             $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
@@ -26,14 +25,29 @@ class HomeController extends Controller
             $posts = Post::whereIn('user_id', $acceptedFriendIds)
                 ->with('user')
                 ->latest()
-                ->paginate(10);
+                ->get();
 
-            return view('home', compact('posts', 'user'));
+            $sharedPosts = Share::whereIn('user_id', $acceptedFriendIds)
+                ->with('post.user') // Include the user information of the original post
+                ->latest()
+                ->get();
+
+            // Merge the posts and shared posts into a single collection
+            $feed = $posts->concat($sharedPosts)->sortByDesc('created_at');
+
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $perPage = 10;
+            $slice = $feed->slice(($currentPage - 1) * $perPage, $perPage);
+            $posts = new LengthAwarePaginator($slice, $feed->count(), $perPage, $currentPage, [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+            ]);
+
+            return view('home', compact('posts', 'user', 'feed'));
         }
 
-        // Handle the case when the user is not authenticated
         return redirect()->route('login');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,7 +70,7 @@ class HomeController extends Controller
      */
     public function show(Home $home)
     {
-       //
+        //
     }
 
     /**

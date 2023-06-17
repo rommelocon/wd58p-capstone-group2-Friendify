@@ -16,7 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('friend_id')->constrained('users');
             $table->integer('accepted')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('modified_by')->nullable()->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

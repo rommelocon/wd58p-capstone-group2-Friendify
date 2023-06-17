@@ -2,259 +2,92 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laravel</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<Style>
+<!-- component -->
 
-    /* ------------------------------------ Click on login and Sign Up to  changue and view the effect
----------------------------------------
-*/
-body {
-    background-image: url('images/bg-friend2.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-header.masthead {
-  padding-top: 10.5rem;
-  padding-bottom: 6rem;
-  text-align: center;
-  color: #fff;
- 
-}
-header.masthead .masthead-subheading {
-  font-size: 1.5rem;
-  font-style: italic;
-  line-height: 1.5rem;
-  margin-bottom: 25px;
-  font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-header.masthead .masthead-heading {
-  font-size: 3.25rem;
-  font-weight: 700;
-  line-height: 3.25rem;
-  margin-bottom: 2rem;
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-.box-form {
-  margin: 0 auto;
-  width: 80%;
-  background: #FFFFFF;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex: 1 1 100%;
-  align-items: stretch;
-  justify-content: space-between;
-  box-shadow: 0 0 20px 6px #090b6f85;
-}
-@media (max-width: 980px) {
-  .box-form {
-    flex-flow: wrap;
-    text-align: center;
-    align-content: center;
-    align-items: center;
-  }
-}
-.box-form div {
-  height: auto;
-}
-.box-form .left {
-  color: #FFFFFF;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url("images/bg-friend.jpg");
-  overflow: hidden;
-}
-.box-form .left .overlay {
-  padding: 30px;
-  width: 100%;
-  height: 100%;
-  background: #5961f9ad;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-.box-form .left .overlay h1 {
-  font-size: 10vmax;
-  line-height: 1;
-  font-weight: 900;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-.box-form .left .overlay span p {
-  margin-top: 30px;
-  font-weight: 900;
-}
-.box-form .left .overlay span a {
-  background: #3b5998;
-  color: #FFFFFF;
-  margin-top: 10px;
-  padding: 14px 50px;
-  border-radius: 100px;
-  display: inline-block;
-  box-shadow: 0 3px 6px 1px #042d4657;
-}
-.box-form .left .overlay span a:last-child {
-  background: #1dcaff;
-  margin-left: 30px;
-}
-.box-form .right {
-  padding: 40px;
-  overflow: hidden;
-}
-@media (max-width: 980px) {
-  .box-form .right {
-    width: 100%;
-  }
-}
-.box-form .right h5 {
-  font-size: 6vmax;
-  line-height: 0;
-}
-.box-form .right p {
-  font-size: 14px;
-  color: #B0B3B9;
-}
-.box-form .right .inputs {
-  overflow: hidden;
-}
-.box-form .right input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 25px;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  border-bottom: 2px solid #B0B3B9;
-}
-.box-form .right .remember-me--forget-password {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.box-form .right .remember-me--forget-password input {
-  margin: 0;
-  margin-right: 7px;
-  width: auto;
-}
-.box-form .right button {
-  float: right;
-  color: #fff;
-  font-size: 16px;
-  padding: 12px 35px;
-  border-radius: 50px;
-  display: inline-block;
-  border: 0;
-  outline: 0;
-  box-shadow: 0px 4px 20px 0px #49c628a6;
-  background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
-}
+<body>
+  <section class="min-h-screen flex items-stretch text-white ">
+    <div class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover bg-right relative items-center" style="background-image: url(images/bg-friend.jpg);">
+      <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+      <div class="w-full px-24 z-10">
+        <h1 class="text-5xl font-bold text-left tracking-wide">Friendify</h1>
+        <p class="text-3xl my-4">Connections is through world! We Find Happines!</p>
+      </div>
+    </div>
+    <div class="lg:w-1/2 flex items-center justify-center text-center md:px-16 px-0 z-0 bg-slate-300">
+      <div class="w-full py-6 z-20">
+        <div class="my-6 flex justify-center text-center">
+          <x-application-logo />
+        </div>
 
-label {
-  display: block;
-  position: relative;
-  margin-left: 30px;
-}
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
 
-label::before {
-  content: ' \f00c';
-  position: absolute;
-  font-family: FontAwesome;
-  background: transparent;
-  border: 3px solid #70F570;
-  border-radius: 4px;
-  color: transparent;
-  left: -30px;
-  transition: all 0.2s linear;
-}
+        <form method="POST" action="{{ route('login') }}" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+          @csrf
+          <!-- Email Address -->
+          <div class="pb-2 pt-4">
+            <!-- <x-input-label for="email" :value="__('Email')" /> -->
+            <x-text-input placeholder="Email" id="email" class="block w-full p-4 text-lg rounded-sm bg-white text-black" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+          </div>
 
-label:hover::before {
-  font-family: FontAwesome;
-  content: ' \f00c';
-  color: #fff;
-  cursor: pointer;
-  background: #70F570;
-}
+          <!-- Password -->
+          <div class="pb-2 pt-4">
+            <!-- <x-input-label for="password" :value="__('Password')" /> -->
+            <x-text-input id="password" class="block w-full p-4 text-lg rounded-sm bg-white text-black" placeholder="Password" type="password" name="password" required autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+          </div>
 
-label:hover::before .text-checkbox {
-  background: #70F570;
-}
+          <!-- Remember Me -->
+          <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+              <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+              <span class="ml-2 text-sm text-gray-900 ">{{ __('Remember me') }}</span>
+            </label>
+          </div>
 
-label span.text-checkbox {
-  display: inline-block;
-  height: auto;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.2s linear;
-}
+          @if (Route::has('password.request'))
+          <a class="text-right text-gray-400 hover:underline hover:text-gray-100" href="{{ route('password.request') }}">
+            {{ __('Forgot your password?') }}
+          </a>
+          @endif
 
-label input[type="checkbox"] {
-  display: none;
-}
+          <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
+              {{ __('Log in') }}
+            </x-primary-button>
+          </div>
 
-</Style>
-
-<body class="antialiased">
-   
-
-
-<header class="masthead">
-            <div class="container">
-            
-                <div class="masthead-subheading">Welcome To Friendlify!</div>
-                <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-                
-            </div>
-</header>
-      
-<div class="box-form">
-	<div class="left">
-		<div class="overlay">
-		<h1>Friendlify</h1>
-		<p>Connections is through world! We Find Happines!</p>
-		<span>
-		
-		</div>
-	</div>
-	
-	
-		<div class="right">
-		<h5>Login</h5>
-		<p>Don't have an account? <a href="#">Creat Your Account</a> it takes less than a minute</p>
-		<div class="inputs">
-			<input type="text" placeholder="user name">
-			<br>
-			<input type="password" placeholder="password">
-		</div>
-			
-			<br><br>
-			
-		<div class="remember-me--forget-password">
-				<!-- Angular -->
-	<label>
-		<input type="checkbox" name="item" checked/>
-		<span class="text-checkbox">Remember me</span>
-	</label>
-			<p>forget password?</p>
-		</div>
-			
-			<br>
-			<button>Login</button>
-	</div>
-	
-</div>
-<!-- partial -->
-
-
-
-
+          <div class="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">
+            <a href="#">
+              <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+              </svg>
+            </a>
+            <a href="#">
+              <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+              </svg>
+            </a>
+            <a href="#">
+              <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 </body>
+
 </html>

@@ -24,7 +24,7 @@ use App\Http\Controllers\ShareController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::get('/home', function () {
@@ -66,9 +66,6 @@ Route::post('/posts/{post}/unlike', [ReactionController::class, 'remove']);
 
 // Retrieve comments for a post (GET request)
 Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('comments.index');
-
-
-Route::resource('users', 'UserController')->only('show');
 
 // Create a new comment for a post (POST request)
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');

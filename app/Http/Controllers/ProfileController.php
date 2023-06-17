@@ -20,13 +20,30 @@ class ProfileController extends Controller
             $friends = $user->friends()->with('profilePicture')->get();
             $loggedInUser = Auth::user(); // Get the currently logged-in user
 
+<<<<<<< HEAD
             $posts = Post::where('user_id', $user->id) // Filter posts by the user being viewed
+=======
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $user = Auth::user();
+            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
+
+            $posts = Post::whereIn('user_id', $acceptedFriendIds)
+>>>>>>> develop
                 ->with('user')
                 ->latest()
                 ->paginate(10);
 
+<<<<<<< HEAD
             return view('console.profile.index', compact('loggedInUser', 'user', 'friends', 'posts'));
         }
+=======
+            return view('console.profile.index', compact('posts', 'user'));
+        }
+
+        // Handle the case when the user is not authenticated
+        return view('console.profile.index', compact('user', 'friends'));
+>>>>>>> develop
     }
 
 

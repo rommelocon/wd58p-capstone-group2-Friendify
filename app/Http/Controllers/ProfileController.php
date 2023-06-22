@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Post;
+use App\Models\Share;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProfileController extends Controller
 {
@@ -17,15 +19,34 @@ class ProfileController extends Controller
     {
         if (Auth::check()) {
             $user = User::find($id);
-            $friends = $user->friends()->with('profilePicture')->get();
-            $loggedInUser = Auth::user(); // Get the currently logged-in user
+            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
 
-            $posts = Post::where('user_id', $user->id) // Filter posts by the user being viewed
+            $userPost = Post::where('user_id', $user->id) // Retrieve posts where the user ID matches the owner's ID
                 ->with('user')
                 ->latest()
-                ->paginate(10);
+                ->get();
 
-            return view('console.profile.index', compact('loggedInUser', 'user', 'friends', 'posts'));
+            $posts = Post::whereIn('user_id', $acceptedFriendIds)
+                ->with('user')
+                ->latest()
+                ->get();
+
+            $sharedPosts = Share::whereIn('user_id', $acceptedFriendIds)
+                ->with('post.user') // Include the user information of the original post
+                ->latest()
+                ->get();
+
+            // Merge the posts and shared posts into a single collection
+            $feed = $posts->concat($sharedPosts)->sortByDesc('created_at');
+
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $perPage = 10;
+            $slice = $feed->slice(($currentPage - 1) * $perPage, $perPage);
+            $posts = new LengthAwarePaginator($slice, $feed->count(), $perPage, $currentPage, [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+            ]);
+
+            return view('console.profile.index', compact('posts', 'user', 'feed', 'userPost'));
         }
     }
 

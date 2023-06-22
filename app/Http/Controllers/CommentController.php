@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function index(Post $post)
     {
-        $comments = $post->comments;
+        $comments = $post->comments()->paginate(3);
 
         return view('comments.index', [
             'post' => $post,

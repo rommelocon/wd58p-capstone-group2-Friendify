@@ -9,8 +9,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\ShareController;
+use App\Http\Controllers\ShareCommentController;
+use App\Http\Controllers\ShareReactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,14 +66,24 @@ Route::post('/posts/share', [ShareController::class, 'create'])->name('posts.sha
 // Reaction routes
 Route::post('/posts/{post}/like', [ReactionController::class, 'update']);
 Route::post('/posts/{post}/unlike', [ReactionController::class, 'remove']);
+Route::post('/shares/{share}/like', [ShareReactionController::class, 'update']);
+Route::post('/shares/{share}/unlike', [ShareReactionController::class, 'remove']);
 
 // Retrieve comments for a post (GET request)
 Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('comments.index');
+Route::get('/posts/{share}/shared-comments', [ShareCommentController::class, 'index'])->name('share-comments.index');
+
 
 // Create a new comment for a post (POST request)
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/posts/{share}/shared-comments', [ShareCommentController::class, 'store'])->name('share-comments.store');
+
+// Route to display the privacy setting view
+Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy.index');
+
+// Route to handle the privacy update request
+Route::put('/posts/{postId}/privacy', [PrivacyController::class, 'update'])->name('posts.privacy.update');
+Route::put('/share/{postId}/privacy', [PrivacyController::class, 'shareUpdate'])->name('shares.privacy.update');
 
 
 require __DIR__ . '/auth.php';
-
-

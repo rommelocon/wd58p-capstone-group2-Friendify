@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Home;
 use App\Http\Requests\StoreHomeRequest;
 use App\Http\Requests\UpdateHomeRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Share;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,11 @@ class HomeController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Post $post)
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
+            $acceptedFriendIds = $user->friends->pluck('id')->push($user->id);
 
             $posts = Post::whereIn('user_id', $acceptedFriendIds)
                 ->with('user')
@@ -38,7 +39,7 @@ class HomeController extends Controller
             $currentPage = LengthAwarePaginator::resolveCurrentPage();
             $perPage = 10;
             $slice = $feed->slice(($currentPage - 1) * $perPage, $perPage);
-            $posts = new LengthAwarePaginator($slice, $feed->count(), $perPage, $currentPage, [
+            $feed = new LengthAwarePaginator($slice, $feed->count(), $perPage, $currentPage, [
                 'path' => LengthAwarePaginator::resolveCurrentPath(),
             ]);
 

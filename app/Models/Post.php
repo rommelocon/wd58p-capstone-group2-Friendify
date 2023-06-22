@@ -11,8 +11,10 @@ class Post extends BaseModel
         'video_path',
         'likes_count',
         'comments_count',
+        'privacy',
     ];
 
+    
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -42,5 +44,40 @@ class Post extends BaseModel
     public function shares()
     {
         return $this->hasMany(Share::class);
+    }
+
+    public function getPaginatedCommentsAttribute()
+    {
+        return $this->comments()->paginate(3);
+    }
+
+    public function getPostImageAttribute()
+    {
+        return $this->image_path;
+    }
+
+    public function getUserProfilePictureAttribute()
+    {
+        return $this->user->profilePicture;
+    }
+
+    public function getUserNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getCreatedAtFormattedAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getTextContentAttribute()
+    {
+        return $this->content;
+    }
+
+    public function getPostVideoAttribute()
+    {
+        return $this->video_path;
     }
 }

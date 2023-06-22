@@ -18,6 +18,7 @@ class CreateSharesTable extends Migration
             $table->integer('shares_count')->default(0); // Add this line
             $table->integer('created_by')->default(0);
             $table->integer('modified_by')->nullable()->default(0);
+            $table->enum('privacy', ['public', 'friends', 'private'])->default('public');
             $table->timestamps();
             $table->softDeletes();
 

@@ -31,15 +31,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'nullable|string|max:255', // Allow the content field to be nullable
-            'image' => 'nullable|image|max:2048', // Allow image uploads (optional)
-            'video' => 'nullable|mimes:mp4|max:100000', // Allow video uploads (optional)
-            // 'link' => 'nullable|url', // Allow link input (optional)
+            'content' => 'nullable|string|max:255',
+            'image' => 'nullable|image|max:2048',
+            'video' => 'nullable|mimes:mp4|max:100000',
+            'privacy' => 'nullable|in:public,friends,private', // Validate privacy setting
         ]);
 
         $post = new Post();
         $post->content = $request->input('content');
         $post->user_id = Auth::id();
+        $post->privacy = $request->input('privacy', 'public'); // Set default to 'public' if not specified
 
         // Handle image upload (if provided)
         if ($request->hasFile('image')) {
@@ -55,15 +56,11 @@ class PostController extends Controller
             $post->video_path = $videoPath;
         }
 
-        // // Handle link input (if provided)
-        // if ($request->has('link')) {
-        //     $post->link = $request->input('link');
-        // }
-
         $post->save();
 
         return redirect()->back()->with('success', 'Post created successfully.');
     }
+
 
     /**
      * Display the specified resource.

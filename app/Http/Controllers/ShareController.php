@@ -28,8 +28,7 @@ class ShareController extends Controller
         $share->save();
 
         // Increment the shares_count of the original post
-        $originalPost->shares_count += 1;
-        $originalPost->save();
+        $originalPost->increment('shares_count');
 
         // Return a response indicating success
         return response()->json(['message' => 'Post shared successfully']);

@@ -20,6 +20,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
     }
 
+    public function share_likes()
+    {
+        return $this->belongsToMany(Share::class, 'share_likes', 'user_id', 'share_id');
+    }
+
     public function friends()
     {
         return $this->mergedRelationWithModel(User::class, 'friends_view');

@@ -1,7 +1,7 @@
 <x-post-content :item="$item" />
 
 <div class="items-center justify-center text-center mt-2 grid grid-cols-3 border-t-2">
-    <x-like-button buttonId="reaction-btn-{{ $item->id }}" :item="$item" />
+    <x-like-button :buttonId="$item->id" :item="$item" />
 
     <x-comment-button :item="$item" />
 

@@ -1,0 +1,1 @@
+<a href="{{ route('profile.index', $userId) }}" class="text-lg font-semibold">{{ $userName }}</a>

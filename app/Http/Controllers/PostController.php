@@ -32,8 +32,7 @@ class PostController extends Controller
     {
         $request->validate([
             'content' => 'nullable|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'video' => 'nullable|mimes:mp4|max:100000',
+            'file' => 'nullable|file|image|mimes:jpeg,png,gif,webp,mp4|max:10000', // Adjust the allowed file types and maximum size as per your requirements
             'privacy' => 'nullable|in:public,friends,private', // Validate privacy setting
         ]);
 
@@ -42,25 +41,24 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->privacy = $request->input('privacy', 'public'); // Set default to 'public' if not specified
 
-        // Handle image upload (if provided)
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagePath = $image->store('post_images', 'public');
-            $post->image_path = $imagePath;
-        }
+        // Handle file upload (if provided)
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filePath = $file->store('post_files', 'public');
 
-        // Handle video upload (if provided)
-        if ($request->hasFile('video')) {
-            $video = $request->file('video');
-            $videoPath = $video->store('post_videos', 'public');
-            $post->video_path = $videoPath;
+            // Determine the file type based on MIME type
+            $fileType = $file->getClientMimeType();
+            if (strpos($fileType, 'image') !== false) {
+                $post->image_path = $filePath;
+            } elseif (strpos($fileType, 'video') !== false) {
+                $post->video_path = $filePath;
+            }
         }
 
         $post->save();
 
         return redirect()->back()->with('success', 'Post created successfully.');
     }
-
 
     /**
      * Display the specified resource.

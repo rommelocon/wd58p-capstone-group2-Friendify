@@ -16,7 +16,7 @@
                         <li class="mb-2 flex justify-between items-center">
 
                             <div class="flex items-center">
-                                <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
+                                <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" :userId="$friend->id" />
 
                                 <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                     {{ $friend->name }}
@@ -48,7 +48,7 @@
                             @foreach (Auth::user()->pendingFriendsFrom as $friend)
                             <li class="mb-4 flex justify-between items-center">
                                 <div class="flex items-center">
-                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
+                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" :userId="$friend->id" />
 
                                     <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                         {{ $friend->name }}
@@ -88,7 +88,7 @@
                             @foreach (Auth::user()->pendingFriendsTo as $friend)
                             <li class="flex justify-between items-center">
                                 <div class="flex items-center">
-                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" />
+                                    <x-profile-picture :profilePicture="$friend->profilePicture" :userName="$friend->name" :userId="$friend->id" />
 
                                     <a href="{{ route('profile.index', $friend->id) }}" class="text-blue-500 hover:text-blue-700">
                                         {{ $friend->name }}

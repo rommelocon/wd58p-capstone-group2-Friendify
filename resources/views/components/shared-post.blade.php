@@ -3,7 +3,7 @@
      <div class="flex justify-between">
          <div class="flex items-center mb-2">
              <!-- User post profile picture -->
-             <x-profile-picture :profilePicture="$item->user->profilePicture" :userName="$item->user->name" />
+             <x-profile-picture :profilePicture="$item->user->profilePicture" :userName="$item->user->name" :userId="$item->user->id" />
              <div class="flex flex-col">
                  <h3 class="text-lg font-semibold">{{ $item->user->name }}</h3>
                  <p class="text-sm text-gray-600">{{ $item->created_at->diffForHumans() }}</p>
@@ -29,7 +29,7 @@
  <div class="items-center justify-center text-center mt-2 border-t-2 px-4">
      <x-comment-form action="{{ route('share-comments.index', ['share' => $item]) }}" />
 
-     <x-display-comments :comments="$item->share_comments" :item="$item" />
+     <x-display-comments :comments="$item->comments" :item="$item" />
  </div>
 
 

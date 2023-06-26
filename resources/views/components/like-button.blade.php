@@ -1,7 +1,7 @@
 <!-- Like button -->
 <form method="POST">
     @csrf
-    <button id="{{ $buttonId ?? '' }}" class="flex items-center justify-center text-center p-2 likeButton w-full hover:bg-gray-100 reaction-btn" data-post-id="{{ $item->id }}">
+    <button id="reaction-btn-{{ $buttonId ?? '' }}" class="flex items-center justify-center text-center p-2 likeButton w-full hover:bg-gray-100 reaction-btn" data-post-id="{{ $item->id }}">
         <span class="like-icon">
             @if ($item->isLikedBy(auth()->user()))
             <i class="fa-solid fa-heart h-5 w-5 text-red-500 mr-1"></i>

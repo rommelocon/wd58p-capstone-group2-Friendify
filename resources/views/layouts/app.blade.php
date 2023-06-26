@@ -21,17 +21,17 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-[#E3F2C1]">
+    <div class="min-h-screen flex-1 flex flex-col bg-gradient-to-br from-white to-[#d1d1d1]">
         @include('layouts.navigation')
 
-        <!-- Page Heading -->
+        <!-- Page Heading
         @if (isset($header))
         <header class="bg-[#C9DBB2]">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 {{ $header }}
             </div>
         </header>
-        @endif
+        @endif -->
 
         <!-- Page Content -->
         <main>
@@ -95,52 +95,128 @@
                 const likeIcon = button.querySelector('.like-icon');
                 const isLiked = likeIcon.classList.contains('liked');
 
-                button.disabled = true;
-                setTimeout(function() {
-                    button.disabled = false;
-                }, 3000); // in milliseconds
+                if (button.disabled) {
+                    return; // Do nothing if the button is already disabled
+                }
+
+                button.disabled = true; // Disable the button
 
                 if (isLiked) {
-                    unlikePost(postId, likeCountElement, likeIcon);
+                    unlikePost(postId, likeCountElement, likeIcon)
+                        .then(response => {
+                            if (response.data.success) {
+                                const likesCount = response.data.likes_count;
+                                likeCountElement.textContent = likesCount;
+                                likeIcon.classList.remove('liked');
+                                likeIcon.innerHTML = '<i class="fa-regular fa-heart h-5 w-5 text-black mr-1"></i>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        })
+                        .finally(() => {
+                            button.disabled = false; // Enable the button after the request is complete
+                        });
                 } else {
-                    likePost(postId, likeCountElement, likeIcon);
+                    likePost(postId, likeCountElement, likeIcon)
+                        .then(response => {
+                            if (response.data.success) {
+                                const likesCount = response.data.likes_count;
+                                likeCountElement.textContent = likesCount;
+                                likeIcon.classList.add('liked');
+                                likeIcon.innerHTML = '<i class="fa-solid fa-heart h-5 w-5 text-red-500 mr-1"></i>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        })
+                        .finally(() => {
+                            button.disabled = false; // Enable the button after the request is complete
+                        });
                 }
             });
         });
 
         function likePost(postId, likeCountElement, likeIcon) {
-            axios.post('/posts/' + postId + '/like', {
-                    _token: '{{ csrf_token() }}'
-                })
-                .then(function(response) {
-                    if (response.data.success) {
-                        const likesCount = response.data.likes_count;
-                        likeCountElement.textContent = likesCount;
-                        likeIcon.classList.add('liked');
-                        likeIcon.innerHTML = '<i class="fa-solid fa-heart h-5 w-5 text-red-500 mr-1"></i>';
-                    }
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
+            return axios.post('/posts/' + postId + '/like', {
+                _token: '{{ csrf_token() }}'
+            });
         }
 
         function unlikePost(postId, likeCountElement, likeIcon) {
-            axios.post('/posts/' + postId + '/unlike', {
-                    _token: '{{ csrf_token() }}'
-                })
-                .then(function(response) {
-                    if (response.data.success) {
-                        const likesCount = response.data.likes_count;
-                        likeCountElement.textContent = likesCount;
-                        likeIcon.classList.remove('liked');
-                        likeIcon.innerHTML = '<i class="fa-regular fa-heart h-5 w-5 text-black mr-1"></i>';
-                    }
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
+            return axios.post('/posts/' + postId + '/unlike', {
+                _token: '{{ csrf_token() }}'
+            });
         }
+
+    });
+
+    // JavaScript to handle cancel buttons and file preview
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('file');
+        const filePreviewContainer = document.getElementById('file-preview');
+        const filePreviewImage = document.getElementById('file-preview-img');
+        const filePreviewPlayer = document.getElementById('file-preview-player');
+        const cancelFileButton = document.getElementById('cancel-file');
+        const uploadButton = document.querySelector('.upload-button');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            const fileType = file.type;
+
+            // Hide the current preview (if any)
+            hideFilePreview();
+
+            // Display the cancel button
+            cancelFileButton.classList.remove('hidden');
+
+            // Check if the file type is an image
+            if (fileType.startsWith('image/')) {
+                filePreviewImage.src = URL.createObjectURL(file);
+                filePreviewImage.classList.remove('hidden');
+            }
+            // Check if the file type is a video
+            else if (fileType.startsWith('video/')) {
+                filePreviewPlayer.src = URL.createObjectURL(file);
+                filePreviewPlayer.classList.remove('hidden');
+            }
+
+            // Show the file preview container
+            filePreviewContainer.classList.remove('hidden');
+
+            // Disable the upload button
+            uploadButton.disabled = true;
+        });
+
+        cancelFileButton.addEventListener('click', function() {
+            // Clear the file input value
+            fileInput.value = '';
+
+            // Hide the file preview
+            hideFilePreview();
+
+            // Hide the cancel button
+            cancelFileButton.classList.add('hidden');
+
+            // Enable the upload button if no file is selected
+            uploadButton.disabled = fileInput.files.length === 0;
+        });
+
+        function hideFilePreview() {
+            // Hide the file preview container
+            filePreviewContainer.classList.add('hidden');
+
+            // Hide the image preview
+            filePreviewImage.src = '#';
+            filePreviewImage.classList.add('hidden');
+
+            // Hide the video preview
+            filePreviewPlayer.src = '#';
+            filePreviewPlayer.classList.add('hidden');
+        }
+
+        // Disable the upload button if a file is already selected on page load
+        uploadButton.disabled = fileInput.files.length > 0;
     });
 </script>
 

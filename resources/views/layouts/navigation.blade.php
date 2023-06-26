@@ -1,11 +1,11 @@
-<nav x-data="{ open: false }" class="bg-[#AAC8A7] border-b border-[#E3F2C1]">
+<nav x-data="{ open: false }" class="bg-[#5d925d] border-[#E3F2C1] sticky z-50 top-0">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid sm:grid-cols-3 grid-cols-2 justify-around h-16">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
                 <a href="{{ route('home') }}">
-                    <x-application-logo width="auto" height="50" color="red" />
+                    <x-application-logo-white width="auto" height="50" />
                 </a>
             </div>
 
@@ -23,7 +23,10 @@
                             <button class="inline-flex items-center py-2 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                 <div class="font-medium text-base text-gray-800">
                                     @auth
-                                    <x-profile-picture :profilePicture="Auth::user()->profilePicture" :userName="Auth::user()->name" />
+                                    <div class="flex items-center">
+                                        <x-profile-picture :profilePicture="Auth::user()->profilePicture" :userName="Auth::user()->name" :userId="Auth::user()->id" />
+                                        <h3 class="text-white">{{ Auth::user()->name }}</h3>
+                                    </div>
                                     @else
                                     Guest
                                     @endauth
@@ -72,7 +75,7 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex">
-                <x-profile-picture :profilePicture="Auth::user()->profilePicture" :userName="Auth::user()->name" />
+                <x-profile-picture :profilePicture="Auth::user()->profilePicture" :userName="Auth::user()->name" :userId="Auth::user()->id" />
                 <div>
                     <div class="font-medium text-base text-gray-800">
                         @auth

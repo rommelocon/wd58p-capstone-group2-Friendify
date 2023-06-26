@@ -21,7 +21,7 @@
                         <ul>
                             @foreach ($results as $user)
                             <li class="flex items-center mb-4">
-                                <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" />
+                                <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" :userId="$user->id" />
                                 <a href="{{ route('profile.index', $user->id) }}" class="text-blue-500 hover:text-blue-700">
                                     {{ $user->name }}
                                 </a>

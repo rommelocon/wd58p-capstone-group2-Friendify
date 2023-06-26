@@ -108,7 +108,6 @@
                         <div class="col-span-2">
                             <x-post-container :index="$userPost" :user="$user" />
                         </div>
-
                     </div>
                 </div>
             </div>

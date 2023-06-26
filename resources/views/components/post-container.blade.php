@@ -2,7 +2,7 @@
     <!-- User Input for posting content -->
     @if (Auth::user()->id === $user->id)
     <div class="flex items-center mb-2">
-        <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" />
+        <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" :userId="$user->id" />
         <x-post-modal title="Post Modal" />
     </div>
     @endif
@@ -28,7 +28,7 @@
             <!-- Post content -->
             <x-post :user="$user" :item="$item" />
         </div>
-        @elseif ($item->privacy === 'private' && $user->id === $item->user_id)
+        @elseif ($item->privacy === 'private' && Auth::user()->id === $item->user->id)
         <!-- Display the post -->
         <div class="post rounded-lg shadow-md py-4 mb-4 border">
             <!-- Post content -->
@@ -49,7 +49,7 @@
             <!-- Shared post content -->
             <x-shared-post :user="$user" :item="$item" />
         </div>
-        @elseif ($item->post->privacy === 'private' && $user->id === $item->post->user_id)
+        @elseif ($item->post->privacy === 'private' && Auth::user()->id === $item->post->user->id)
         <!-- Display the shared post -->
         <div class="post rounded-lg shadow-md py-4 mb-4 border">
             <!-- Shared post content -->

@@ -27,19 +27,23 @@
                                 <textarea name="content" class="description bg-gray-100 sec p-3 h-40 border border-gray-300 outline-none resize-none" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
 
                                 <div class="mt-3">
-                                    <!-- Image Upload -->
-                                    <label for="image" class="cursor-pointer">
-                                        <i class="fa-solid fa-file-image"></i>
-                                        <span class="ml-2 text-gray-700">Upload Image</span>
-                                        <input id="image" type="file" name="image" class="hidden">
+                                    <!-- File Upload -->
+                                    <label for="file" class="cursor-pointer">
+                                        <i class="fa-solid fa-file"></i>
+                                        <span class="ml-2 text-gray-700">Upload File</span>
+                                        <input id="file" type="file" name="file" class="hidden" />
+                                        <!-- Added cancel button for file -->
+                                        <button type="button" id="cancel-file" class="ml-2 text-red-600 hidden">Cancel</button>
                                     </label>
-
-                                    <!-- Video Upload -->
-                                    <label for="video" class="cursor-pointer">
-                                        <i class="fa-solid fa-file-video"></i>
-                                        <span class="ml-2 text-gray-700">Upload Video</span>
-                                        <input id="video" type="file" name="video" class="hidden">
-                                    </label>
+                                    <!-- File preview container -->
+                                    <div id="file-preview" class="mt-2 hidden">
+                                        <!-- Image preview -->
+                                        <img id="file-preview-img" src="#" alt="File Preview" class="max-w-full h-auto hidden">
+                                        <!-- Video preview -->
+                                        <video id="file-preview-player" controls class="hidden">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
                                 </div>
 
                                 <!-- Buttons -->

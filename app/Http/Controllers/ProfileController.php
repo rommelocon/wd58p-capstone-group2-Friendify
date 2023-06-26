@@ -19,7 +19,7 @@ class ProfileController extends Controller
     {
         if (Auth::check()) {
             $user = User::find($id);
-            $acceptedFriendIds = $user->acceptedFriendsFrom->pluck('id')->merge($user->acceptedFriendsTo->pluck('id'))->push($user->id);
+            $acceptedFriendIds = $user->friends->pluck('id')->push($user->id);
 
             $userPost = Post::where('user_id', $user->id) // Retrieve posts where the user ID matches the owner's ID
                 ->with('user')

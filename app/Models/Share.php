@@ -23,7 +23,7 @@ class Share extends BaseModel
         return $this->belongsTo(User::class);
     }
 
-    public function share_comments()
+    public function comments()
     {
         return $this->hasMany(ShareComment::class);
     }
@@ -45,7 +45,7 @@ class Share extends BaseModel
 
     public function updateCommentsCount()
     {
-        $this->comments_count = $this->share_comments()->count();
+        $this->comments_count = $this->comments()->count();
         $this->save();
     }
 

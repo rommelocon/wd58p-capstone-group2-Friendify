@@ -11,7 +11,7 @@
                 <div class="p-6 flex items-center justify-between">
                     <div class="flex items-center">
 
-                        <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" class="big-picture" />
+                        <x-profile-picture :profilePicture="$user->profilePicture" :userName="$user->name" :userId="$user->id" class="big-picture" />
 
                         <div>
                             <p class="text-4xl font-black">{{ $user->name }}</p>
@@ -73,19 +73,15 @@
                         <div>
                             <div class="mb-2">
                                 <h3 class="font-bold text-lg">Photos</h3>
-                                @if ($posts->isEmpty())
+                                @if ($userPost->isEmpty())
                                 <!-- Display message for no posts available -->
                                 <p class="text-gray-500">No photo available.</p>
                                 @else
                                 <div class="grid grid-cols-3 gap-2 mt-2">
-                                    @foreach($posts as $post)
+                                    @foreach($userPost as $item)
                                     <!-- Display image if available -->
-                                    @if ($post->image_path)
-                                    <div class="bg-gray-100 overflow-hidden">
-                                        <div class="relative" style="padding-bottom: 100%;">
-                                            <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image" class="absolute inset-0 w-full h-full object-cover object-center">
-                                        </div>
-                                    </div>
+                                    @if ($item->image_path)
+                                    <x-post-content-modal :item="$item" :modal="'album'" :title="'Photos'" />
                                     @endif
                                     @endforeach
                                 </div>
@@ -93,19 +89,15 @@
                             </div>
                             <div class="mb-2">
                                 <h3 class="font-bold text-lg">Videos</h3>
-                                @if ($posts->isEmpty())
+                                @if ($userPost->isEmpty())
                                 <!-- Display message for no posts available -->
                                 <p class="text-gray-500">No video available.</p>
                                 @else
                                 <div class="grid grid-cols-3 gap-2 mt-2">
-                                    @foreach($posts as $post)
+                                    @foreach($userPost as $item)
                                     <!-- Display image if available -->
-                                    @if ($post->video_path)
-                                    <div class="bg-gray-100 overflow-hidden">
-                                        <div class="relative" style="padding-bottom: 100%;">
-                                            <video src="{{ asset('storage/' . $post->video_path) }}" alt="Post Video" class="absolute inset-0 w-full h-full object-cover object-center"></video>
-                                        </div>
-                                    </div>
+                                    @if ($item->video_path)
+                                    <x-post-content-modal :item="$item" :modal="'album'" :title="'Videos'"/>
                                     @endif
                                     @endforeach
                                 </div>
